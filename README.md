@@ -80,3 +80,65 @@ java -jar target/mottracker-0.0.1-SNAPSHOT.jar
 * Documentação Swagger UI: [http://localhost:8080/swagger-ui/index.html#/](http://localhost:8080/swagger-ui/index.html#/)
 
 ## Rotas da API
+
+---
+
+## Usuários
+
+| Método | Endpoint               | Descrição                  |
+|--------|------------------------|----------------------------|
+| GET    | `/usuarios`            | Listar todos os usuários   |
+| GET    | `/usuarios/{id}`       | Buscar usuário por ID      |
+| POST   | `/usuarios`            | Criar novo usuário         |
+| PUT    | `/usuarios/{id}`       | Atualizar usuário          |
+| DELETE | `/usuarios/{id}`       | Excluir usuário            |
+
+---
+
+## Localizações
+
+| Método | Endpoint                   | Descrição                     |
+|--------|----------------------------|-------------------------------|
+| GET    | `/localizacoes`            | Listar todas as localizações  |
+| GET    | `/localizacoes/{id}`       | Buscar localização por ID     |
+| POST   | `/localizacoes`            | Criar nova localização        |
+| PUT    | `/localizacoes/{id}`       | Atualizar localização         |
+| DELETE | `/localizacoes/{id}`       | Excluir localização           |
+
+---
+
+## Postagens
+
+| Método | Endpoint              | Descrição                    |
+|--------|-----------------------|------------------------------|
+| GET    | `/postagens`          | Listar todas as postagens    |
+| GET    | `/postagens/{id}`     | Buscar postagem por ID       |
+| POST   | `/postagens`          | Criar nova postagem          |
+| PUT    | `/postagens/{id}`     | Atualizar postagem           |
+| DELETE | `/postagens/{id}`     | Excluir postagem             |
+
+---
+
+## Comentários
+
+| Método | Endpoint               | Descrição                     |
+|--------|------------------------|-------------------------------|
+| GET    | `/comentarios`         | Listar todos os comentários   |
+| GET    | `/comentarios/{id}`    | Buscar comentário por ID      |
+| POST   | `/comentarios`         | Criar novo comentário         |
+| PUT    | `/comentarios/{id}`    | Atualizar comentário          |
+| DELETE | `/comentarios/{id}`    | Excluir comentário            |
+
+---
+
+## Categorias de Desastre
+
+| Método | Endpoint                          | Descrição                            |
+|--------|-----------------------------------|----------------------------------------|
+| GET    | `/categorias-desastre`            | Listar todas as categorias             |
+| GET    | `/categorias-desastre/{id}`       | Buscar categoria por ID                |
+| POST   | `/categorias-desastre`            | Criar nova categoria de desastre       |
+| PUT    | `/categorias-desastre/{id}`       | Atualizar categoria                    |
+| DELETE | `/categorias-desastre/{id}`       | Excluir categoria                      |
+
+---
