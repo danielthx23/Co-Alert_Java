@@ -211,8 +211,7 @@ java -jar target/mottracker-0.0.1-SNAPSHOT.jar
 {
   "nmConteudo": "Excelente relato, obrigado por compartilhar!",
   "usuarioId": COLOQUE_O_ID_DO_USUARIO,
-  "postagemId": COLOQUE_O_ID_DA_POSTAGEM,
-  "idComentarioParente": 0
+  "postagemId": COLOQUE_O_ID_DA_POSTAGEM
 }
 ```
 
@@ -222,8 +221,7 @@ java -jar target/mottracker-0.0.1-SNAPSHOT.jar
 {
   "nmConteudo": "Atualizando meu comentário: a situação foi resolvida pela Defesa Civil.",
   "usuarioId": COLOQUE_O_ID_DO_USUARIO,
-  "postagemId": COLOQUE_O_ID_DA_POSTAGEM,
-  "idComentarioParente": 0
+  "postagemId": COLOQUE_O_ID_DA_POSTAGEM
 }
 ```
 
@@ -237,7 +235,7 @@ java -jar target/mottracker-0.0.1-SNAPSHOT.jar
 {
   "usuarioId": COLOQUE_O_ID_DO_USUARIO,
   "postagemId": COLOQUE_O_ID_DA_POSTAGEM,
-  "comentarioId": COLOQUE_O_ID_DO_COMENTARIO
+  "dtLike": "2025-06-02"
 }
 ```
 
