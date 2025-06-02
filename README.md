@@ -18,6 +18,10 @@ Este projeto responde a um desafio crescente: o aumento de até 460% nos desastr
 * Danilo Correia e Silva - RM 557540
 * João Pedro Rodrigues da Costa - RM 558199
 
+## Link de Deploy
+
+[Link do deploy](https://co-alert-java.onrender.com/)
+
 ## ⚙️ Instalação do Projeto
 
 ### Requisitos
@@ -35,7 +39,15 @@ spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
 spring.datasource.username=${ORACLEUSER}
 spring.datasource.password=${ORACLEPASSWORD}
 ```
+ou crie um arquivo .env com as váriaveis de ambiente
 
+```bash
+ORACLEHOST=oracle.fiap.com.br
+ORACLEPORT=1521
+ORACLEDATABASE=orcl
+ORACLEUSER=seuusuario
+ORACLEPASSWORD=suasenha
+```
 ### Rodar o Projeto
 
 #### Opção 1: Usando Maven direto
