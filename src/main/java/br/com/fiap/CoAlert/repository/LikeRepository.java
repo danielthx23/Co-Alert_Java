@@ -10,13 +10,13 @@ import java.util.Optional;
 @Repository
 public interface LikeRepository extends JpaRepository<Like, Long> {
 
-    Optional<Like> findByUsuario_IdAndPostagem_IdAndComentarioIsNull(Long idUsuario, Long idPostagem);
+    Optional<Like> findByUsuario_IdUsuarioAndPostagem_IdPostagemAndComentarioIsNull(Long idUsuario, Long idPostagem);
 
-    Optional<Like> findByUsuario_IdAndComentario_IdAndPostagemIsNull(Long idUsuario, Long idComentario);
+    Optional<Like> findByUsuario_IdUsuarioAndComentario_IdComentarioAndPostagemIsNull(Long idUsuario, Long idComentario);
 
-    long countByPostagem_Id(Long idPostagem);
+    long countByPostagem_IdPostagem(Long idPostagem);
 
-    long countByComentario_Id(Long idComentario);
+    long countByComentario_IdComentario(Long idComentario);
 
     @Procedure(procedureName = "inserir_like")
     void inserirLike(

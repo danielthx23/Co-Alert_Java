@@ -29,5 +29,5 @@ public interface CategoriaDesastreRepository extends JpaRepository<CategoriaDesa
         @Param("p_tipo") String tipo
     );
 
-    Optional<CategoriaDesastre> findByTitulo(String titulo);
+    Optional<CategoriaDesastre> findByNmTitulo(String titulo);
 }

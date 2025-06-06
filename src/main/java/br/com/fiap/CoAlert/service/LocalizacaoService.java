@@ -43,7 +43,7 @@ public class LocalizacaoService {
         );
         
         // Buscar a localização recém-criada pelos dados únicos
-        Localizacao localizacao = localizacaoRepository.findByBairroAndLogradouroAndNumeroAndCidadeAndEstadoAndCepAndPais(
+        Localizacao localizacao = localizacaoRepository.findByNmBairroAndNmLogradouroAndNrNumeroAndNmCidadeAndNmEstadoAndNrCepAndNmPais(
                 dto.getNmBairro(),
                 dto.getNmLogradouro(),
                 dto.getNrNumero(),
@@ -90,15 +90,15 @@ public class LocalizacaoService {
 
     private LocalizacaoResponseDto toResponseDto(Localizacao entity) {
         return new LocalizacaoResponseDto(
-                entity.getId(),
-                entity.getBairro(),
-                entity.getLogradouro(),
-                entity.getNumero(),
-                entity.getCidade(),
-                entity.getEstado(),
-                entity.getCep(),
-                entity.getPais(),
-                entity.getComplemento()
+                entity.getIdLocalizacao(),
+                entity.getNmBairro(),
+                entity.getNmLogradouro(),
+                entity.getNrNumero(),
+                entity.getNmCidade(),
+                entity.getNmEstado(),
+                entity.getNrCep(),
+                entity.getNmPais(),
+                entity.getDsComplemento()
         );
     }
 }

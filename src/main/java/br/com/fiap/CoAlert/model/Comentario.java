@@ -18,7 +18,7 @@ public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_comentario_id")
     @Column(name = "ID_COMENTARIO")
-    private Long id;
+    private Long idComentario;
 
     @ManyToOne
     @JoinColumn(name = "ID_USUARIO", nullable = false)
@@ -29,13 +29,13 @@ public class Comentario {
     private Postagem postagem;
 
     @Column(name = "NM_CONTEUDO", nullable = false)
-    private String conteudo;
+    private String nmConteudo;
 
     @Column(name = "DT_ENVIO", nullable = false)
-    private LocalDateTime dataEnvio;
+    private LocalDateTime dtEnvio;
 
     @Column(name = "NR_LIKES")
-    private Long likes;
+    private Long nrLikes;
 
     @ManyToOne
     @JoinColumn(name = "ID_COMENTARIO_PARENTE")

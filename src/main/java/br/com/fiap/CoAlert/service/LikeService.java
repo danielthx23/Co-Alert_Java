@@ -65,11 +65,11 @@ public class LikeService {
         // Buscar o like recém-criado
         Like like;
         if (dto.getIdPostagem() != null) {
-            like = likeRepository.findByUsuario_IdAndPostagem_IdAndComentarioIsNull(
+            like = likeRepository.findByUsuario_IdUsuarioAndPostagem_IdPostagemAndComentarioIsNull(
                 dto.getIdUsuario(), dto.getIdPostagem()
             ).orElseThrow(() -> new IllegalStateException("Erro ao criar like: não foi possível encontrá-lo após a criação"));
         } else {
-            like = likeRepository.findByUsuario_IdAndComentario_IdAndPostagemIsNull(
+            like = likeRepository.findByUsuario_IdUsuarioAndComentario_IdComentarioAndPostagemIsNull(
                 dto.getIdUsuario(), dto.getIdComentario()
             ).orElseThrow(() -> new IllegalStateException("Erro ao criar like: não foi possível encontrá-lo após a criação"));
         }
@@ -102,12 +102,12 @@ public class LikeService {
         if (dto.getIdPostagem() != null) {
             Postagem postagem = postagemRepository.findById(dto.getIdPostagem())
                     .orElseThrow(() -> new EntityNotFoundException("Postagem não encontrada com ID: " + dto.getIdPostagem()));
-            existingLike = likeRepository.findByUsuario_IdAndPostagem_IdAndComentarioIsNull(
+            existingLike = likeRepository.findByUsuario_IdUsuarioAndPostagem_IdPostagemAndComentarioIsNull(
                     dto.getIdUsuario(), dto.getIdPostagem());
         } else {
             Comentario comentario = comentarioRepository.findById(dto.getIdComentario())
                     .orElseThrow(() -> new EntityNotFoundException("Comentário não encontrado com ID: " + dto.getIdComentario()));
-            existingLike = likeRepository.findByUsuario_IdAndComentario_IdAndPostagemIsNull(
+            existingLike = likeRepository.findByUsuario_IdUsuarioAndComentario_IdComentarioAndPostagemIsNull(
                     dto.getIdUsuario(), dto.getIdComentario());
         }
 
@@ -118,7 +118,7 @@ public class LikeService {
         } else {
             Like like = new Like();
             like.setUsuario(usuario);
-            like.setDataLike(dto.getDtLike());
+            like.setDtLike(dto.getDtLike());
 
             if (dto.getIdPostagem() != null) {
                 Postagem postagem = postagemRepository.findById(dto.getIdPostagem())
@@ -135,8 +135,8 @@ public class LikeService {
         }
 
         long totalLikes = dto.getIdPostagem() != null
-                ? likeRepository.countByPostagem_Id(dto.getIdPostagem())
-                : likeRepository.countByComentario_Id(dto.getIdComentario());
+                ? likeRepository.countByPostagem_IdPostagem(dto.getIdPostagem())
+                : likeRepository.countByComentario_IdComentario(dto.getIdComentario());
 
         return new LikeStatsDto(totalLikes, isLiked);
     }
@@ -146,18 +146,18 @@ public class LikeService {
             if (!postagemRepository.existsById(postagemId)) {
                 throw new EntityNotFoundException("Postagem não encontrada com ID: " + postagemId);
             }
-            long totalLikes = likeRepository.countByPostagem_Id(postagemId);
+            long totalLikes = likeRepository.countByPostagem_IdPostagem(postagemId);
             boolean isLiked = usuarioId != null && likeRepository
-                    .findByUsuario_IdAndPostagem_IdAndComentarioIsNull(usuarioId, postagemId)
+                    .findByUsuario_IdUsuarioAndPostagem_IdPostagemAndComentarioIsNull(usuarioId, postagemId)
                     .isPresent();
             return new LikeStatsDto(totalLikes, isLiked);
         } else if (comentarioId != null) {
             if (!comentarioRepository.existsById(comentarioId)) {
                 throw new EntityNotFoundException("Comentário não encontrado com ID: " + comentarioId);
             }
-            long totalLikes = likeRepository.countByComentario_Id(comentarioId);
+            long totalLikes = likeRepository.countByComentario_IdComentario(comentarioId);
             boolean isLiked = usuarioId != null && likeRepository
-                    .findByUsuario_IdAndComentario_IdAndPostagemIsNull(usuarioId, comentarioId)
+                    .findByUsuario_IdUsuarioAndComentario_IdComentarioAndPostagemIsNull(usuarioId, comentarioId)
                     .isPresent();
             return new LikeStatsDto(totalLikes, isLiked);
         }
@@ -166,11 +166,11 @@ public class LikeService {
 
     private LikeResponseDto toResponseDto(Like like) {
         return new LikeResponseDto(
-                like.getId(),
-                like.getUsuario().getNome(),
-                like.getPostagem() != null ? like.getPostagem().getId() : null,
-                like.getComentario() != null ? like.getComentario().getId() : null,
-                like.getDataLike()
+                like.getIdLike(),
+                like.getUsuario().getNmUsuario(),
+                like.getPostagem() != null ? like.getPostagem().getIdPostagem() : null,
+                like.getComentario() != null ? like.getComentario().getIdComentario() : null,
+                like.getDtLike()
         );
     }
 } 

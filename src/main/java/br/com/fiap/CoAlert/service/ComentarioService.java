@@ -59,7 +59,7 @@ public class ComentarioService {
         );
         
         // Buscar o comentário recém-criado
-        Comentario comentario = comentarioRepository.findByConteudoAndUsuarioAndPostagemAndDataEnvio(
+        Comentario comentario = comentarioRepository.findByNmConteudoAndUsuarioAndPostagemAndDtEnvio(
             dto.getNmConteudo(),
             usuario,
             postagem,
@@ -113,13 +113,13 @@ public class ComentarioService {
 
     private ComentarioResponseDto toResponseDto(Comentario comentario) {
         return new ComentarioResponseDto(
-                comentario.getId(),
-                comentario.getComentarioParente() != null ? comentario.getComentarioParente().getId() : null,
-                comentario.getConteudo(),
-                comentario.getDataEnvio(),
-                comentario.getLikes(),
-                comentario.getUsuario().getNome(),
-                comentario.getPostagem().getId()
+                comentario.getIdComentario(),
+                comentario.getComentarioParente() != null ? comentario.getComentarioParente().getIdComentario() : null,
+                comentario.getNmConteudo(),
+                comentario.getDtEnvio(),
+                comentario.getNrLikes(),
+                comentario.getUsuario().getNmUsuario(),
+                comentario.getPostagem().getIdPostagem()
         );
     }
 }

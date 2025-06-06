@@ -39,13 +39,13 @@ public interface LocalizacaoRepository extends JpaRepository<Localizacao, Long> 
         @Param("p_complemento") String complemento
     );
 
-    Optional<Localizacao> findByBairroAndLogradouroAndNumeroAndCidadeAndEstadoAndCepAndPais(
-        String bairro,
-        String logradouro,
-        String numero,
-        String cidade,
-        String estado,
-        String cep,
-        String pais
+    Optional<Localizacao> findByNmBairroAndNmLogradouroAndNrNumeroAndNmCidadeAndNmEstadoAndNrCepAndNmPais(
+            String nmBairro,
+            String nmLogradouro,
+            String nrNumero,
+            String nmCidade,
+            String nmEstado,
+            String nrCep,
+            String nmPais
     );
 }

@@ -40,10 +40,10 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long> {
         @Param("p_id_localizacao") Long idLocalizacao
     );
 
-    Optional<Postagem> findByTituloAndConteudoAndUsuarioAndDataEnvio(
-        String titulo,
-        String conteudo,
-        Usuario usuario,
-        LocalDateTime dataEnvio
+    Optional<Postagem> findByNmTituloAndNmConteudoAndIdUsuarioAndDtEnvio(
+            String nmTitulo,
+            String nmConteudo,
+            Usuario idUsuario,
+            LocalDateTime dtEnvio
     );
 }

@@ -33,7 +33,7 @@ public class UsuarioService {
     public UsuarioResponseDto create(UsuarioSaveRequestDto dto) {
         usuarioRepository.inserirUsuario(dto.getNmUsuario(), dto.getNrSenha(), dto.getNmEmail());
         // Buscar o usuário recém-criado pelo email
-        Usuario usuario = usuarioRepository.findByEmail( dto.getNmEmail())
+        Usuario usuario = usuarioRepository.findByNmEmail( dto.getNmEmail())
                 .orElseThrow(() -> new IllegalStateException("Erro ao criar usuário: não foi possível encontrá-lo após a criação"));
         return toResponseDto(usuario);
     }
@@ -59,9 +59,9 @@ public class UsuarioService {
 
     private UsuarioResponseDto toResponseDto(Usuario usuario) {
         return new UsuarioResponseDto(
-                usuario.getId(),
-                usuario.getNome(),
-                usuario.getEmail()
+                usuario.getIdUsuario(),
+                usuario.getNmUsuario(),
+                usuario.getNmEmail()
         );
     }
 }

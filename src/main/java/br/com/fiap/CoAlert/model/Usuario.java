@@ -16,14 +16,14 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_usuario_id")
     @Column(name = "ID_USUARIO")
-    private Long id;
+    private Long idUsuario;
 
     @Column(name = "NM_USUARIO", nullable = false)
-    private String nome;
+    private String nmUsuario;
 
     @Column(name = "NR_SENHA", nullable = false)
-    private String senha;
+    private String nrSenha;
 
     @Column(name = "NM_EMAIL", nullable = false, unique = true)
-    private String email;
+    private String nmEmail;
 }

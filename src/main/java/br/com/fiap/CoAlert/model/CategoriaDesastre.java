@@ -16,14 +16,14 @@ public class CategoriaDesastre {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_categoria_id")
     @Column(name = "ID_CATEGORIA_DESASTRE")
-    private Long id;
+    private Long idCategoriaDesastre;
 
     @Column(name = "NM_TITULO", nullable = false)
-    private String titulo;
+    private String nmTitulo;
 
     @Column(name = "DS_CATEGORIA", nullable = false)
-    private String categoria;
+    private String dsCategoria;
 
     @Column(name = "NM_TIPO", nullable = false)
-    private String tipo;
+    private String nmTipo;
 }

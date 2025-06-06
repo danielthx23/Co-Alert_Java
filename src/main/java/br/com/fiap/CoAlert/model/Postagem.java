@@ -15,7 +15,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "CA_POSTAGEM")
 @SequenceGenerator(name = "seq_postagem_id", sequenceName = "seq_postagem_id", allocationSize = 1)
@@ -24,31 +23,31 @@ public class Postagem {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_postagem_id")
     @Column(name = "ID_POSTAGEM")
-    private Long id;
+    private Long idPostagem;
 
     @Column(name = "NM_TITULO", nullable = false)
-    private String titulo;
+    private String nmTitulo;
 
     @Column(name = "NM_CONTEUDO", nullable = false)
-    private String conteudo;
+    private String nmConteudo;
 
     @Column(name = "DT_ENVIO", nullable = false)
-    private LocalDateTime dataEnvio;
+    private LocalDateTime dtEnvio;
 
     @Column(name = "NR_LIKES")
-    private Integer likes;
+    private Integer nrLikes;
 
     @ManyToOne
     @JoinColumn(name = "ID_USUARIO", nullable = false)
-    private Usuario usuario;
+    private Usuario idUsuario;
 
     @ManyToOne
     @JoinColumn(name = "ID_CATEGORIA_DESASTRE", nullable = false)
-    private CategoriaDesastre categoriaDesastre;
+    private CategoriaDesastre idCategoriaDesastre;
 
     @ManyToOne
     @JoinColumn(name = "ID_LOCALIZACAO", nullable = false)
-    private Localizacao localizacao;
+    private Localizacao idLocalizacao;
 
     @OneToMany(mappedBy = "postagem", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("postagem")

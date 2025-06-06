@@ -37,10 +37,10 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
         @Param("p_id_comentario_pai") Long idComentarioParente
     );
 
-    Optional<Comentario> findByConteudoAndUsuarioAndPostagemAndDataEnvio(
-        String conteudo,
-        Usuario usuario,
-        Postagem postagem,
-        LocalDateTime dataEnvio
+    Optional<Comentario> findByNmConteudoAndUsuarioAndPostagemAndDtEnvio(
+            String nmConteudo,
+            Usuario usuario,
+            Postagem postagem,
+            LocalDateTime dtEnvio
     );
 }

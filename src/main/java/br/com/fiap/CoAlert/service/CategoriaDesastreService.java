@@ -38,7 +38,7 @@ public class CategoriaDesastreService {
         );
         
         // Buscar a categoria recém-criada pelo título (assumindo que é único)
-        CategoriaDesastre categoria = categoriaRepository.findByTitulo(dto.getNmTitulo())
+        CategoriaDesastre categoria = categoriaRepository.findByNmTitulo(dto.getNmTitulo())
                 .orElseThrow(() -> new IllegalStateException("Erro ao criar categoria: não foi possível encontrá-la após a criação"));
         
         return toResponseDto(categoria);
@@ -73,10 +73,10 @@ public class CategoriaDesastreService {
 
     private CategoriaDesastreResponseDto toResponseDto(CategoriaDesastre categoria) {
         return new CategoriaDesastreResponseDto(
-                categoria.getId(),
-                categoria.getTitulo(),
-                categoria.getCategoria(),
-                categoria.getTipo()
+                categoria.getIdCategoriaDesastre(),
+                categoria.getNmTitulo(),
+                categoria.getDsCategoria(),
+                categoria.getNmTipo()
         );
     }
 }

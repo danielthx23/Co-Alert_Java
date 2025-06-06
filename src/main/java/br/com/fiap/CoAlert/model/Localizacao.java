@@ -16,29 +16,29 @@ public class Localizacao {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_localizacao_id")
     @Column(name = "ID_LOCALIZACAO")
-    private Long id;
+    private Long idLocalizacao;
 
     @Column(name = "NM_BAIRRO", nullable = false)
-    private String bairro;
+    private String nmBairro;
 
     @Column(name = "NM_LOGRADOURO", nullable = false)
-    private String logradouro;
+    private String nmLogradouro;
 
     @Column(name = "NR_NUMERO")
-    private String numero;
+    private String nrNumero;
 
     @Column(name = "NM_CIDADE", nullable = false)
-    private String cidade;
+    private String nmCidade;
 
     @Column(name = "NM_ESTADO", nullable = false)
-    private String estado;
+    private String nmEstado;
 
     @Column(name = "NR_CEP", nullable = false)
-    private String cep;
+    private String nrCep;
 
     @Column(name = "NM_PAIS", nullable = false)
-    private String pais;
+    private String nmPais;
 
     @Column(name = "DS_COMPLEMENTO")
-    private String complemento;
+    private String dsComplemento;
 }

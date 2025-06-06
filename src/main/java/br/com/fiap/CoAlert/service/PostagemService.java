@@ -58,7 +58,7 @@ public class PostagemService {
         );
         
         // Buscar a postagem recém-criada
-        Postagem postagem = postagemRepository.findByTituloAndConteudoAndUsuarioAndDataEnvio(
+        Postagem postagem = postagemRepository.findByNmTituloAndNmConteudoAndIdUsuarioAndDtEnvio(
             dto.getNmTitulo(),
             dto.getNmConteudo(),
             usuario,
@@ -111,24 +111,24 @@ public class PostagemService {
 
     private PostagemResponseDto toResponseDto(Postagem postagem) {
         return new PostagemResponseDto(
-                postagem.getId(),
-                postagem.getTitulo(),
-                postagem.getConteudo(),
-                postagem.getDataEnvio(),
-                postagem.getLikes(),
-                postagem.getUsuario().getNome(),
-                postagem.getCategoriaDesastre().getTitulo(),
-                postagem.getLocalizacao().getCidade(),
+                postagem.getIdPostagem(),
+                postagem.getNmTitulo(),
+                postagem.getNmConteudo(),
+                postagem.getDtEnvio(),
+                postagem.getNrLikes(),
+                postagem.getIdUsuario().getNmUsuario(),
+                postagem.getIdCategoriaDesastre().getNmTitulo(),
+                postagem.getIdLocalizacao().getNmCidade(),
                 postagem.getComentarios() != null ?
                         postagem.getComentarios().stream()
                                 .map(c -> new ComentarioResponseDto(
-                                        c.getId(),
-                                        c.getComentarioParente() != null ? c.getComentarioParente().getId() : null,
-                                        c.getConteudo(),
-                                        c.getDataEnvio(),
-                                        c.getLikes(),
-                                        c.getUsuario().getNome(),
-                                        c.getPostagem().getId()))
+                                        c.getIdComentario(),
+                                        c.getComentarioParente() != null ? c.getComentarioParente().getIdComentario() : null,
+                                        c.getNmConteudo(),
+                                        c.getDtEnvio(),
+                                        c.getNrLikes(),
+                                        c.getUsuario().getNmUsuario(),
+                                        c.getPostagem().getIdPostagem()))
                                 .collect(Collectors.toList()) : List.of()
         );
     }

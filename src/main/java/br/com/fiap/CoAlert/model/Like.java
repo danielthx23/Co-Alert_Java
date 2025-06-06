@@ -17,10 +17,10 @@ public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_like_id")
     @Column(name = "ID_LIKE")
-    private Long id;
+    private Long idLike;
 
     @Column(name = "DT_LIKE", nullable = false)
-    private LocalDateTime dataLike;
+    private LocalDateTime dtLike;
 
     @ManyToOne
     @JoinColumn(name = "ID_POSTAGEM")
