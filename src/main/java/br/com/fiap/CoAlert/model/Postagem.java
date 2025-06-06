@@ -39,15 +39,15 @@ public class Postagem {
 
     @ManyToOne
     @JoinColumn(name = "ID_USUARIO", nullable = false)
-    private Usuario Usuario;
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "ID_CATEGORIA_DESASTRE", nullable = false)
-    private CategoriaDesastre CategoriaDesastre;
+    private CategoriaDesastre categoriaDesastre;
 
     @ManyToOne
     @JoinColumn(name = "ID_LOCALIZACAO", nullable = false)
-    private Localizacao Localizacao;
+    private Localizacao localizacao;
 
     @OneToMany(mappedBy = "postagem", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("postagem")
