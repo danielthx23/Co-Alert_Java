@@ -18,6 +18,10 @@ Este projeto responde a um desafio crescente: o aumento de até 460% nos desastr
 * Danilo Correia e Silva - RM 557540
 * João Pedro Rodrigues da Costa - RM 558199
 
+## Link de Deploy
+
+[Link do deploy](https://co-alert-java.onrender.com/)
+
 ## ⚙️ Instalação do Projeto
 
 ### Requisitos
@@ -35,7 +39,15 @@ spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
 spring.datasource.username=${ORACLEUSER}
 spring.datasource.password=${ORACLEPASSWORD}
 ```
+ou crie um arquivo .env com as váriaveis de ambiente
 
+```bash
+ORACLEHOST=oracle.fiap.com.br
+ORACLEPORT=1521
+ORACLEDATABASE=orcl
+ORACLEUSER=seuusuario
+ORACLEPASSWORD=suasenha
+```
 ### Rodar o Projeto
 
 #### Opção 1: Usando Maven direto
@@ -79,6 +91,154 @@ java -jar target/mottracker-0.0.1-SNAPSHOT.jar
 * A API estará acessível em: [http://localhost:8080](http://localhost:8080)
 * Documentação Swagger UI: [http://localhost:8080/swagger-ui/index.html#/](http://localhost:8080/swagger-ui/index.html#/)
 
+## Exemplos de Teste da API
+
+### Categoria de Desastre
+
+**Exemplo POST**
+
+```json
+{
+  "nmTitulo": "Enchente Urbana",
+  "dsCategoria": "Desastres relacionados ao acúmulo de água em áreas urbanas devido a chuvas intensas.",
+  "nmTipo": "Hidrológico"
+}
+```
+
+**Exemplo PUT**
+
+```json
+{
+  "nmTitulo": "Enchente Urbana Moderada",
+  "dsCategoria": "Inundações em áreas urbanas causadas por chuvas acima da média, com impactos localizados.",
+  "nmTipo": "Hidrológico"
+}
+```
+
+---
+
+### Localização
+
+**Exemplo POST**
+
+```json
+{
+  "nmBairro": "Centro",
+  "nmLogradouro": "Rua das Flores",
+  "nrNumero": 123,
+  "nmCidade": "São Paulo",
+  "nmEstado": "SP",
+  "nrCep": "01001-000",
+  "nmPais": "Brasil",
+  "dsComplemento": "Apartamento 101"
+}
+```
+
+**Exemplo PUT**
+
+```json
+{
+  "nmBairro": "Centro",
+  "nmLogradouro": "Rua das Palmeiras",
+  "nrNumero": 456,
+  "nmCidade": "São Paulo",
+  "nmEstado": "SP",
+  "nrCep": "01001-001",
+  "nmPais": "Brasil",
+  "dsComplemento": "Bloco B, Apt. 202"
+}
+```
+
+---
+
+### Usuário
+
+**Exemplo POST**
+
+```json
+{
+  "nmUsuario": "joaosilva",
+  "nrSenha": "SenhaForte123!",
+  "nmEmail": "joao.silva@email.com"
+}
+```
+
+**Exemplo PUT**
+
+```json
+{
+  "nmUsuario": "joaosilva_atualizado",
+  "nrSenha": "NovaSenhaSegura456!",
+  "nmEmail": "joao.silva.novo@email.com"
+}
+```
+
+---
+
+### Postagem
+
+**Exemplo POST**
+
+```json
+{
+  "nmTitulo": "Deslizamento em encosta",
+  "nmConteudo": "Foi registrado um deslizamento de terra em uma área de risco após fortes chuvas.",
+  "usuarioId": COLOQUE_O_ID_DO_USUARIO,
+  "categoriaDesastreId": COLOQUE_O_ID_DA_CATEGORIA,
+  "localizacaoId": COLOQUE_O_ID_DA_LOCALIZACAO
+}
+```
+
+**Exemplo PUT**
+
+```json
+{
+  "nmTitulo": "Deslizamento em encosta atualizado",
+  "nmConteudo": "Atualização: o deslizamento afetou três residências e interditou a rua principal.",
+  "usuarioId": COLOQUE_O_ID_DO_USUARIO,
+  "categoriaDesastreId": COLOQUE_O_ID_DA_CATEGORIA,
+  "localizacaoId": COLOQUE_O_ID_DA_LOCALIZACAO
+}
+```
+
+---
+
+### Comentário
+
+**Exemplo POST**
+
+```json
+{
+  "nmConteudo": "Excelente relato, obrigado por compartilhar!",
+  "usuarioId": COLOQUE_O_ID_DO_USUARIO,
+  "postagemId": COLOQUE_O_ID_DA_POSTAGEM
+}
+```
+
+**Exemplo PUT**
+
+```json
+{
+  "nmConteudo": "Atualizando meu comentário: a situação foi resolvida pela Defesa Civil.",
+  "usuarioId": COLOQUE_O_ID_DO_USUARIO,
+  "postagemId": COLOQUE_O_ID_DA_POSTAGEM
+}
+```
+
+---
+
+### Like
+
+**Exemplo POST**
+
+```json
+{
+  "usuarioId": COLOQUE_O_ID_DO_USUARIO,
+  "postagemId": COLOQUE_O_ID_DA_POSTAGEM,
+  "dtLike": "2025-06-02"
+}
+```
+
 ## Rotas da API
 
 ---
@@ -116,6 +276,18 @@ java -jar target/mottracker-0.0.1-SNAPSHOT.jar
 | POST   | `/postagens`          | Criar nova postagem          |
 | PUT    | `/postagens/{id}`     | Atualizar postagem           |
 | DELETE | `/postagens/{id}`     | Excluir postagem             |
+
+---
+
+## Likes
+
+| Método | Endpoint                              | Descrição                       |
+|--------|----------------------------------------|---------------------------------|
+| DELETE | `/likes/{id}`                         | Excluir like                    |
+| GET    | `/likes`                              | Listar todos os likes           |
+| GET    | `/likes/postagem/{postagemId}`        | Obter curtidas da postagem      |
+| GET    | `/likes/comentario/{comentarioId}`    | Obter curtidas do comentário    |
+| POST   | `/likes/toggle`                       | Alternar curtida                |
 
 ---
 
