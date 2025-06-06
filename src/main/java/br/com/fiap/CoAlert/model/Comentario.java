@@ -1,43 +1,43 @@
 package br.com.fiap.CoAlert.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 
-import java.time.LocalDate;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "CA_COMENTARIO")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@SequenceGenerator(name = "seq_comentario_id", sequenceName = "seq_comentario_id", allocationSize = 1)
 public class Comentario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idComentario;
-
-    private Long idComentarioParente;
-
-    @NotNull
-    private String nmConteudo;
-
-    @NotNull
-    private LocalDate dtEnvio;
-
-    @NotNull
-    private Long nrLikes;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_comentario_id")
+    @Column(name = "ID_COMENTARIO")
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "ID_USUARIO")
+    @JoinColumn(name = "ID_USUARIO", nullable = false)
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "CA_POSTAGEM_ID_POSTAGEM")
+    @JoinColumn(name = "ID_POSTAGEM", nullable = false)
     private Postagem postagem;
+
+    @Column(name = "NM_CONTEUDO", nullable = false)
+    private String conteudo;
+
+    @Column(name = "DT_ENVIO", nullable = false)
+    private LocalDateTime dataEnvio;
+
+    @Column(name = "NR_LIKES")
+    private Long likes;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_COMENTARIO_PARENTE")
+    private Comentario comentarioParente;
 }

@@ -41,6 +41,51 @@ public class LikeService {
     }
 
     @Transactional
+    public LikeResponseDto create(LikeSaveRequestDto dto) {
+        // Validar existência das entidades relacionadas
+        Usuario usuario = usuarioRepository.findById(dto.getIdUsuario())
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com ID: " + dto.getIdUsuario()));
+
+        if (dto.getIdPostagem() != null) {
+            postagemRepository.findById(dto.getIdPostagem())
+                    .orElseThrow(() -> new EntityNotFoundException("Postagem não encontrada com ID: " + dto.getIdPostagem()));
+        }
+
+        if (dto.getIdComentario() != null) {
+            comentarioRepository.findById(dto.getIdComentario())
+                    .orElseThrow(() -> new EntityNotFoundException("Comentário não encontrado com ID: " + dto.getIdComentario()));
+        }
+
+        likeRepository.inserirLike(
+            dto.getIdUsuario(),
+            dto.getIdPostagem(),
+            dto.getIdComentario()
+        );
+        
+        // Buscar o like recém-criado
+        Like like;
+        if (dto.getIdPostagem() != null) {
+            like = likeRepository.findByUsuario_IdAndPostagem_IdAndComentarioIsNull(
+                dto.getIdUsuario(), dto.getIdPostagem()
+            ).orElseThrow(() -> new IllegalStateException("Erro ao criar like: não foi possível encontrá-lo após a criação"));
+        } else {
+            like = likeRepository.findByUsuario_IdAndComentario_IdAndPostagemIsNull(
+                dto.getIdUsuario(), dto.getIdComentario()
+            ).orElseThrow(() -> new IllegalStateException("Erro ao criar like: não foi possível encontrá-lo após a criação"));
+        }
+        
+        return toResponseDto(like);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        if (!likeRepository.existsById(id)) {
+            throw new EntityNotFoundException("Like não encontrado com ID: " + id);
+        }
+        likeRepository.deletarLike(id);
+    }
+
+    @Transactional
     public LikeStatsDto toggleLike(LikeSaveRequestDto dto) {
         if (dto.getIdPostagem() == null && dto.getIdComentario() == null) {
             throw new IllegalArgumentException("É necessário fornecer o ID da postagem ou do comentário");
@@ -57,12 +102,12 @@ public class LikeService {
         if (dto.getIdPostagem() != null) {
             Postagem postagem = postagemRepository.findById(dto.getIdPostagem())
                     .orElseThrow(() -> new EntityNotFoundException("Postagem não encontrada com ID: " + dto.getIdPostagem()));
-            existingLike = likeRepository.findByUsuarioIdUsuarioAndPostagemIdPostagemAndComentarioIsNull(
+            existingLike = likeRepository.findByUsuario_IdAndPostagem_IdAndComentarioIsNull(
                     dto.getIdUsuario(), dto.getIdPostagem());
         } else {
             Comentario comentario = comentarioRepository.findById(dto.getIdComentario())
                     .orElseThrow(() -> new EntityNotFoundException("Comentário não encontrado com ID: " + dto.getIdComentario()));
-            existingLike = likeRepository.findByUsuarioIdUsuarioAndComentarioIdComentarioAndPostagemIsNull(
+            existingLike = likeRepository.findByUsuario_IdAndComentario_IdAndPostagemIsNull(
                     dto.getIdUsuario(), dto.getIdComentario());
         }
 
@@ -73,7 +118,7 @@ public class LikeService {
         } else {
             Like like = new Like();
             like.setUsuario(usuario);
-            like.setDtLike(dto.getDtLike());
+            like.setDataLike(dto.getDtLike());
 
             if (dto.getIdPostagem() != null) {
                 Postagem postagem = postagemRepository.findById(dto.getIdPostagem())
@@ -90,49 +135,42 @@ public class LikeService {
         }
 
         long totalLikes = dto.getIdPostagem() != null
-                ? likeRepository.countByPostagemIdPostagem(dto.getIdPostagem())
-                : likeRepository.countByComentarioIdComentario(dto.getIdComentario());
+                ? likeRepository.countByPostagem_Id(dto.getIdPostagem())
+                : likeRepository.countByComentario_Id(dto.getIdComentario());
 
         return new LikeStatsDto(totalLikes, isLiked);
     }
 
-    public LikeStatsDto getLikeStats(Long postagemId, Long comentarioId, Long usuarioId) {
+    public LikeStatsDto getStats(Long postagemId, Long comentarioId, Long usuarioId) {
         if (postagemId != null) {
             if (!postagemRepository.existsById(postagemId)) {
                 throw new EntityNotFoundException("Postagem não encontrada com ID: " + postagemId);
             }
-            long totalLikes = likeRepository.countByPostagemIdPostagem(postagemId);
+            long totalLikes = likeRepository.countByPostagem_Id(postagemId);
             boolean isLiked = usuarioId != null && likeRepository
-                    .findByUsuarioIdUsuarioAndPostagemIdPostagemAndComentarioIsNull(usuarioId, postagemId)
+                    .findByUsuario_IdAndPostagem_IdAndComentarioIsNull(usuarioId, postagemId)
                     .isPresent();
             return new LikeStatsDto(totalLikes, isLiked);
         } else if (comentarioId != null) {
             if (!comentarioRepository.existsById(comentarioId)) {
                 throw new EntityNotFoundException("Comentário não encontrado com ID: " + comentarioId);
             }
-            long totalLikes = likeRepository.countByComentarioIdComentario(comentarioId);
+            long totalLikes = likeRepository.countByComentario_Id(comentarioId);
             boolean isLiked = usuarioId != null && likeRepository
-                    .findByUsuarioIdUsuarioAndComentarioIdComentarioAndPostagemIsNull(usuarioId, comentarioId)
+                    .findByUsuario_IdAndComentario_IdAndPostagemIsNull(usuarioId, comentarioId)
                     .isPresent();
             return new LikeStatsDto(totalLikes, isLiked);
         }
         throw new IllegalArgumentException("É necessário fornecer o ID da postagem ou do comentário");
     }
 
-    public void delete(Long id) {
-        if (!likeRepository.existsById(id)) {
-            throw new EntityNotFoundException("Like não encontrado com ID: " + id);
-        }
-        likeRepository.deleteById(id);
-    }
-
     private LikeResponseDto toResponseDto(Like like) {
         return new LikeResponseDto(
-                like.getIdLike(),
-                like.getUsuario().getNmUsuario(),
-                like.getPostagem() != null ? like.getPostagem().getIdPostagem() : null,
-                like.getComentario() != null ? like.getComentario().getIdComentario() : null,
-                like.getDtLike()
+                like.getId(),
+                like.getUsuario().getNome(),
+                like.getPostagem() != null ? like.getPostagem().getId() : null,
+                like.getComentario() != null ? like.getComentario().getId() : null,
+                like.getDataLike()
         );
     }
 } 

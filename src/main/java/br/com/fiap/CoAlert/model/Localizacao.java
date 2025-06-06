@@ -1,44 +1,44 @@
 package br.com.fiap.CoAlert.model;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name = "CA_LOCALIZACAO")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@SequenceGenerator(name = "seq_localizacao_id", sequenceName = "seq_localizacao_id", allocationSize = 1)
 public class Localizacao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idLocalizacao;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_localizacao_id")
+    @Column(name = "ID_LOCALIZACAO")
+    private Long id;
 
-    @NotNull
-    private String nmBairro;
+    @Column(name = "NM_BAIRRO", nullable = false)
+    private String bairro;
 
-    @NotNull
-    private String nmLogradouro;
+    @Column(name = "NM_LOGRADOURO", nullable = false)
+    private String logradouro;
 
-    @NotNull
-    private Integer nrNumero;
+    @Column(name = "NR_NUMERO")
+    private String numero;
 
-    @NotNull
-    private String nmCidade;
+    @Column(name = "NM_CIDADE", nullable = false)
+    private String cidade;
 
-    @NotNull
-    private String nmEstado;
+    @Column(name = "NM_ESTADO", nullable = false)
+    private String estado;
 
-    @NotNull
-    private String nrCep;
+    @Column(name = "NR_CEP", nullable = false)
+    private String cep;
 
-    @NotNull
-    private String nmPais;
+    @Column(name = "NM_PAIS", nullable = false)
+    private String pais;
 
-    private String dsComplemento;
+    @Column(name = "DS_COMPLEMENTO")
+    private String complemento;
 }

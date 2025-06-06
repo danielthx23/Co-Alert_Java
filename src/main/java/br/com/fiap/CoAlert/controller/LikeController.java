@@ -74,7 +74,7 @@ public class LikeController {
     public ResponseEntity<ApiResponseGeneric<LikeStatsDto>> getPostLikes(
             @PathVariable Long postagemId,
             @RequestParam(required = false) Long usuarioId) {
-        LikeStatsDto stats = likeService.getLikeStats(postagemId, null, usuarioId);
+        LikeStatsDto stats = likeService.getStats(postagemId, null, usuarioId);
         return ResponseEntity.ok(new ApiResponseGeneric<>("Informações de curtidas retornadas com sucesso.", stats));
     }
 
@@ -90,7 +90,7 @@ public class LikeController {
     public ResponseEntity<ApiResponseGeneric<LikeStatsDto>> getCommentLikes(
             @PathVariable Long comentarioId,
             @RequestParam(required = false) Long usuarioId) {
-        LikeStatsDto stats = likeService.getLikeStats(null, comentarioId, usuarioId);
+        LikeStatsDto stats = likeService.getStats(null, comentarioId, usuarioId);
         return ResponseEntity.ok(new ApiResponseGeneric<>("Informações de curtidas retornadas com sucesso.", stats));
     }
 

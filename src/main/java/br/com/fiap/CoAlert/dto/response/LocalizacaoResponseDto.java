@@ -12,7 +12,7 @@ public class LocalizacaoResponseDto {
     private Long idLocalizacao;
     private String nmBairro;
     private String nmLogradouro;
-    private Integer nrNumero;
+    private String nrNumero;
     private String nmCidade;
     private String nmEstado;
     private String nrCep;

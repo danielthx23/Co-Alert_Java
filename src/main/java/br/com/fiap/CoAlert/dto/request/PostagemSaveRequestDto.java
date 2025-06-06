@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ public class PostagemSaveRequestDto {
 
     @NotNull(message = "A data de envio é obrigatória")
     @PastOrPresent(message = "A data de envio não pode ser futura")
-    private LocalDate dtEnvio;
+    private LocalDateTime dtEnvio;
 
     @NotNull(message = "O número de likes é obrigatório")
     @Min(value = 0, message = "O número de likes deve ser no mínimo 0")

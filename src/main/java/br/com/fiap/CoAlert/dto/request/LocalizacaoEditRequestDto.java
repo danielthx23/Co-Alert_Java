@@ -22,9 +22,8 @@ public class LocalizacaoEditRequestDto {
     @NotBlank(message = "O logradouro não pode estar em branco")
     private String nmLogradouro;
 
-    @NotNull(message = "O número é obrigatório")
-    @Min(value = 1, message = "O número deve ser maior que zero")
-    private Integer nrNumero;
+    @NotBlank(message = "O número é obrigatório")
+    private String  nrNumero;
 
     @NotBlank(message = "A cidade não pode estar em branco")
     private String nmCidade;

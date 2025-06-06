@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,7 +15,7 @@ public class PostagemResponseDto {
     private Long idPostagem;
     private String nmTitulo;
     private String nmConteudo;
-    private LocalDate dtEnvio;
+    private LocalDateTime dtEnvio;
     private Integer nrLikes;
 
     private String nomeUsuario;

@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -18,34 +18,36 @@ import java.util.List;
 
 @Entity
 @Table(name = "CA_POSTAGEM")
+@SequenceGenerator(name = "seq_postagem_id", sequenceName = "seq_postagem_id", allocationSize = 1)
 public class Postagem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPostagem;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_postagem_id")
+    @Column(name = "ID_POSTAGEM")
+    private Long id;
 
-    @NotNull
-    private String nmTitulo;
+    @Column(name = "NM_TITULO", nullable = false)
+    private String titulo;
 
-    @NotNull
-    private String nmConteudo;
+    @Column(name = "NM_CONTEUDO", nullable = false)
+    private String conteudo;
 
-    @NotNull
-    private LocalDate dtEnvio;
+    @Column(name = "DT_ENVIO", nullable = false)
+    private LocalDateTime dataEnvio;
 
-    @NotNull
-    private Integer nrLikes;
+    @Column(name = "NR_LIKES")
+    private Integer likes;
 
     @ManyToOne
-    @JoinColumn(name = "CA_USUARIO_ID_USUARIO")
+    @JoinColumn(name = "ID_USUARIO", nullable = false)
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "CA_CATEGORIA_DESASTRE_ID_CATEGORIA_DESASTRE")
+    @JoinColumn(name = "ID_CATEGORIA_DESASTRE", nullable = false)
     private CategoriaDesastre categoriaDesastre;
 
     @ManyToOne
-    @JoinColumn(name = "CA_LOCALIZACAO_ID_LOCALIZACAO")
+    @JoinColumn(name = "ID_LOCALIZACAO", nullable = false)
     private Localizacao localizacao;
 
     @OneToMany(mappedBy = "postagem", cascade = CascadeType.ALL, orphanRemoval = true)

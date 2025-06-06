@@ -1,7 +1,7 @@
 package br.com.fiap.CoAlert.service;
 
-import br.com.fiap.CoAlert.dto.request.UsuarioEditRequestDto;
 import br.com.fiap.CoAlert.dto.request.UsuarioSaveRequestDto;
+import br.com.fiap.CoAlert.dto.request.UsuarioEditRequestDto;
 import br.com.fiap.CoAlert.dto.response.UsuarioResponseDto;
 import br.com.fiap.CoAlert.model.Usuario;
 import br.com.fiap.CoAlert.repository.UsuarioRepository;
@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,39 +29,39 @@ public class UsuarioService {
         return toResponseDto(usuario);
     }
 
+    @Transactional
     public UsuarioResponseDto create(UsuarioSaveRequestDto dto) {
-        Usuario usuario = new Usuario();
-        usuario.setNmUsuario(dto.getNmUsuario());
-        usuario.setNrSenha(dto.getNrSenha());
-        usuario.setNmEmail(dto.getNmEmail());
-
-        Usuario saved = usuarioRepository.save(usuario);
-        return toResponseDto(saved);
+        usuarioRepository.inserirUsuario(dto.getNmUsuario(), dto.getNrSenha(), dto.getNmEmail());
+        // Buscar o usuário recém-criado pelo email
+        Usuario usuario = usuarioRepository.findByEmail( dto.getNmEmail())
+                .orElseThrow(() -> new IllegalStateException("Erro ao criar usuário: não foi possível encontrá-lo após a criação"));
+        return toResponseDto(usuario);
     }
 
-    public UsuarioResponseDto update(Long id, UsuarioEditRequestDto dto) {
-        Usuario existing = usuarioRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com ID: " + id));
-
-        existing.setNmUsuario(dto.getNmUsuario());
-        existing.setNmEmail(dto.getNmEmail());
-
-        Usuario updated = usuarioRepository.save(existing);
-        return toResponseDto(updated);
-    }
-
+    @Transactional
     public void delete(Long id) {
         if (!usuarioRepository.existsById(id)) {
             throw new EntityNotFoundException("Usuário não encontrado com ID: " + id);
         }
-        usuarioRepository.deleteById(id);
+        usuarioRepository.deletarUsuario(id);
+    }
+
+    @Transactional
+    public UsuarioResponseDto update(Long id, UsuarioEditRequestDto dto) {
+        if (!usuarioRepository.existsById(id)) {
+            throw new EntityNotFoundException("Usuário não encontrado com ID: " + id);
+        }
+        usuarioRepository.atualizarUsuario(id, dto.getNmUsuario(), dto.getNrSenha(), dto.getNmEmail());
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("Erro ao atualizar usuário: não foi possível encontrá-lo após a atualização"));
+        return toResponseDto(usuario);
     }
 
     private UsuarioResponseDto toResponseDto(Usuario usuario) {
         return new UsuarioResponseDto(
-                usuario.getIdUsuario(),
-                usuario.getNmUsuario(),
-                usuario.getNmEmail()
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getEmail()
         );
     }
 }

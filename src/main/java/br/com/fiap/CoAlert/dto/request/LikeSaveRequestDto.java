@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,5 +20,5 @@ public class LikeSaveRequestDto {
     private Long idComentario;
 
     @NotNull(message = "A data do like é obrigatória")
-    private LocalDate dtLike;
+    private LocalDateTime dtLike;
 } 
