@@ -55,17 +55,17 @@ public class PostagemController {
                 
                 - `page`: número da página (inicia em 0)
                 - `size`: quantidade de registros por página
-                - `sort`: ordenação. Pode ser passada como `"campo,direcao"` (ex: `"dataCriacao,desc"` ou `"dataCriacao,asc"`)
+                - `sort`: ordenação. Pode ser passada como `"campo,direcao"` (ex: `"dtEnvio,desc"` ou `"dtEnvio,asc"`)
                 """,
                     examples = @ExampleObject(name = "Exemplo de paginação", value = """
                 {
                   "page": 0,
                   "size": 10,
-                  "sort": "dataCriacao,desc"
+                  "sort": "dtEnvio,desc"
                 }
             """)
             )
-            @PageableDefault(size = 10, sort = "dataCriacao", direction = Sort.Direction.DESC)
+            @PageableDefault(size = 10, sort = "dtEnvio", direction = Sort.Direction.DESC)
             Pageable pageable) {
 
         Page<PostagemResponseDto> postagens = postagemService.getAll(pageable);
@@ -136,8 +136,13 @@ public class PostagemController {
                             schema = @Schema(implementation = PostagemSaveRequestDto.class),
                             examples = @ExampleObject(value = """
                                 {
-                                  "titulo": "Título da postagem",
-                                  "conteudo": "Conteúdo descritivo"
+                                  "nmTitulo": "Deslizamento de terra na encosta norte",
+                                  "nmConteudo": "Houve um deslizamento após as fortes chuvas desta madrugada. Moradores estão sendo evacuados.",
+                                  "dtEnvio": "2025-06-06T09:45:00",
+                                  "nrLikes": 0,
+                                  "idUsuario": 1,
+                                  "idCategoriaDesastre": 2,
+                                  "idLocalizacao": 5
                                 }
                             """)
                     )
@@ -161,8 +166,13 @@ public class PostagemController {
                                   "mensagem": "Postagem atualizada com sucesso.",
                                   "dados": {
                                     "id": 1,
-                                    "titulo": "Título atualizado",
-                                    "conteudo": "Conteúdo atualizado"
+                                    "titulo": "Deslizamento de terra na encosta norte - ATUALIZADO",
+                                    "conteudo": "Atualização: A situação está sob controle. Equipes de resgate já finalizaram a evacuação dos moradores.",
+                                    "dtEnvio": "2025-06-06T10:30:00",
+                                    "nrLikes": 15,
+                                    "idUsuario": 1,
+                                    "idCategoriaDesastre": 2,
+                                    "idLocalizacao": 5
                                   }
                                 }
                             """)
@@ -173,6 +183,25 @@ public class PostagemController {
     })
     public ResponseEntity<ApiResponseGeneric<PostagemResponseDto>> update(
             @Parameter(description = "ID da postagem") @PathVariable Long id,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Dados atualizados da postagem",
+                    required = true,
+                    content = @Content(
+                            schema = @Schema(implementation = PostagemEditRequestDto.class),
+                            examples = @ExampleObject(value = """
+                                {
+                                  "idPostagem": 1,
+                                  "nmTitulo": "Deslizamento de terra na encosta norte - ATUALIZADO",
+                                  "nmConteudo": "Atualização: A situação está sob controle. Equipes de resgate já finalizaram a evacuação dos moradores.",
+                                  "dtEnvio": "2025-06-06T10:30:00",
+                                  "nrLikes": 15,
+                                  "idUsuario": 1,
+                                  "idCategoriaDesastre": 2,
+                                  "idLocalizacao": 5
+                                }
+                            """)
+                    )
+            )
             @Valid @RequestBody PostagemEditRequestDto dto
     ) {
         PostagemResponseDto atualizada = postagemService.update(id, dto);

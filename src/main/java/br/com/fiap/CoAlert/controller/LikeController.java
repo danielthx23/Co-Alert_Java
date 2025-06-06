@@ -57,6 +57,20 @@ public class LikeController {
             @ApiResponse(responseCode = "404", description = "Recurso não encontrado")
     })
     public ResponseEntity<ApiResponseGeneric<LikeStatsDto>> toggleLike(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Dados para alternar o like",
+                    required = true,
+                    content = @Content(
+                            schema = @Schema(implementation = LikeSaveRequestDto.class),
+                            examples = @ExampleObject(value = """
+                                {
+                                  "idUsuario": 1,
+                                  "idPostagem": 1,
+                                  "dtLike": "2025-06-06T10:30:00"
+                                }
+                            """)
+                    )
+            )
             @Valid @RequestBody LikeSaveRequestDto dto) {
         LikeStatsDto stats = likeService.toggleLike(dto);
         return ResponseEntity.ok(new ApiResponseGeneric<>("Operação realizada com sucesso.", stats));

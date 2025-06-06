@@ -116,9 +116,9 @@ public class PostagemService {
                 postagem.getNmConteudo(),
                 postagem.getDtEnvio(),
                 postagem.getNrLikes(),
-                postagem.getIdUsuario().getNmUsuario(),
-                postagem.getIdCategoriaDesastre().getNmTitulo(),
-                postagem.getIdLocalizacao().getNmCidade(),
+                postagem.getUsuario().getNmUsuario(),
+                postagem.getCategoriaDesastre().getNmTitulo(),
+                postagem.getLocalizacao().getNmCidade(),
                 postagem.getComentarios() != null ?
                         postagem.getComentarios().stream()
                                 .map(c -> new ComentarioResponseDto(
