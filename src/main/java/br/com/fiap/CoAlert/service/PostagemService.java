@@ -58,7 +58,7 @@ public class PostagemService {
         );
         
         // Buscar a postagem recém-criada
-        Postagem postagem = postagemRepository.findByNmTituloAndNmConteudoAndIdUsuarioAndDtEnvio(
+        Postagem postagem = postagemRepository.findByNmTituloAndNmConteudoAndUsuarioAndDtEnvio(
             dto.getNmTitulo(),
             dto.getNmConteudo(),
             usuario,
