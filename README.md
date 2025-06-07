@@ -18,7 +18,7 @@ Este projeto responde a um desafio crescente: o aumento de até 460% nos desastr
 * Danilo Correia e Silva - RM 557540
 * João Pedro Rodrigues da Costa - RM 558199
 
-## Link de Deploy
+## Link de Deploy no Render
 
 [Link do deploy](https://co-alert-java.onrender.com/)
 
