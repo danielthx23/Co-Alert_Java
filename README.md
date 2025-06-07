@@ -26,6 +26,8 @@ Este projeto responde a um desafio crescente: o aumento de até 460% nos desastr
 
 [Link vídeo de demonstração](https://www.youtube.com/watch?v=PfSh0i2n1RA)
 
+[![Demonstração do projeto](https://img.youtube.com/vi/PfSh0i2n1RA/0.jpg)](https://www.youtube.com/watch?v=PfSh0i2n1RA)
+
 ## Vídeo Pitch
 
 
