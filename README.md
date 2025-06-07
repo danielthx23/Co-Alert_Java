@@ -22,6 +22,13 @@ Este projeto responde a um desafio crescente: o aumento de até 460% nos desastr
 
 [Link do deploy](https://co-alert-java.onrender.com/)
 
+## Vídeo de Demonstração
+
+[Link vídeo de demonstração](https://www.youtube.com/watch?v=PfSh0i2n1RA)
+
+## Vídeo Pitch
+
+
 ## ⚙️ Instalação do Projeto
 
 ### Requisitos
