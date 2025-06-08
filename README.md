@@ -95,7 +95,7 @@ mvn clean package
 2. Rodar o `.jar` com Java:
 
 ```bash
-java -jar target/coalert-0.0.1-SNAPSHOT.jar
+java -jar target/CoAlert-0.0.1-SNAPSHOT.jar
 ```
 
 ### Acessar a API
